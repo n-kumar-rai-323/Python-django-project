@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+{% include 'includes/nav.html' %}
+<hr>
+<div class="container" style="margin-top: 30px">
+<h1>{{ job.title }}</h1><br>
+<b>Description</b><br>
+{{ job.description }}<br><br>
+<b>Category</b><br>
+{{ job.category.title }}<br><br>
+<b>Application Deadline</b><br>
+{{ job.application_deadline }}<br><br>
+<div>
+{% if request.user.is_authenticated %}
+<a href="{% url 'job_apply' job.uuid %}" class="btn btn-outline-success">Apply</a>
+{% else %}
+<a href="#" onclick="login_required()" class="btn btn-outline-success">Apply</a>
+{% endif %}
+<a href="{% url 'home' %}" class="btn btn-success">Cancel</a>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,194 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block content %}
+{% include 'includes/nav.html' %}
+<hr>
+<div class="container">
+    <div class="card-body text-center">
+        {% if request.user.userprofile.profile_picture %}
+                <img src="{{ request.user.userprofile.profile_picture.url }}"
+                     style="height: 300px; width: 300px; border-radius: 10px">
+                {% else %}
+                <img src="{% static 'account/R.png' %}" style="height: 300px; width: 300px">
+                {% endif %}
+        <h5 class="my-3">{{ request.user.get_full_name }}</h5>
+        <div class="d-flex justify-content-center mb-2">
+            <button type="button" class="btn btn-primary">Follow</button>
+            <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{request.user.get_full_name }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ request.user.email }}</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">About Me</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0"> {% if request.user.userprofile.about_me %}
+                    {{ request.user.userprofile.about_me }}
+                    {% else %}
+                    -
+                    {% endif %}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Address</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                         {% if request.user.userprofile.address %}
+                    {{ request.user.userprofile.address }}
+                    {% else %}
+                    -
+                    {% endif %}</p>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Phone Number</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0"> {% if request.user.userprofile.phone_number %}
+                    {{ request.user.userprofile.phone_number }}
+                    {% else %}
+                    -
+                    {% endif %}</p>
+                </div>
+
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-3">
+                    <p class="mb-0">Resume</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0">{% if request.user.userprofile.resume %}
+                    <a href="{{ request.user.userprofile.resume.url }}" target="_blank">View</a>
+                    {% else %}
+                    -
+                    {% endif %}</p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3">
+                <p class="mb-0">Status</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0"> {% if request.user.email_activated %}
+                    Active
+                    {% else %}
+                    Inactive
+                    {% endif %}</p>
+                </div>
+            </div>
+<hr>
+            <div class="row">
+                <div class="col-sm-3">
+                <p class="mb-0">Profile Status</p>
+                </div>
+                <div class="col-sm-9">
+                    <p class="text-muted mb-0"> {% if is_profile_complete %}
+                    Complete
+                    {% else %}
+                    Incomplete
+                    {% endif %}</p>
+                </div>
+            </div>
+
+
+        </div>
+         <a href="{% url 'user_profile_update' %}" class="btn btn-outline-success">Edit Profile</a>
+    </div>
+
+
+<!--    <div style="margin-top: 50px"></div>-->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div class="col-md-4">-->
+<!--                {% if request.user.userprofile.profile_picture %}-->
+<!--                <img src="{{ request.user.userprofile.profile_picture.url }}"-->
+<!--                     style="height: 300px; width: 300px; border-radius: 20px">-->
+<!--                {% else %}-->
+<!--                <img src="{% static 'account/R.png' %}" style="height: 300px; width: 300px">-->
+<!--                {% endif %}-->
+<!--            </div>-->
+<!--            <div class="col-md-8">-->
+<!--                <p>-->
+<!--                    <b>Name</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{request.user.get_full_name-->
+<!--                    }}-->
+<!--                </p>-->
+<!--                <p>-->
+<!--                    <b>Email</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{request.user.email }}-->
+<!--                </p>-->
+<!--                <p><b>Address</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                    {% if request.user.userprofile.address %}-->
+<!--                    {{ request.user.userprofile.address }}-->
+<!--                    {% else %}-->
+<!--                    - -->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--                <p><b>Phone Number</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                    {% if request.user.userprofile.phone_number %}-->
+<!--                    {{ request.user.userprofile.phone_number }}-->
+<!--                    {% else %}-->
+<!--                    - -->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--                <p><b>About Me</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                    {% if request.user.userprofile.about_me %}-->
+<!--                    {{ request.user.userprofile.about_me }}-->
+<!--                    {% else %}-->
+<!--                    - -->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--                <p><b>Resume</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                    {% if request.user.userprofile.resume %}-->
+<!--                    <a href="{{ request.user.userprofile.resume.url }}" target="_blank">View</a>-->
+<!--                    {% else %}-->
+<!--                    - -->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--                <p><b>Status</b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp-->
+<!--                    {% if request.user.email_activated %}-->
+<!--                    Active-->
+<!--                    {% else %}-->
+<!--                    Inactive-->
+<!--                    {% endif %}-->
+<!--                </p>-->
+<!--                <a href="{% url 'user_profile_update' %}" class="btn btn-outline-success">Edit Profile</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div style="height: 170px"></div>-->
+    {% include 'includes/footer.html' %}
+    {% endblock %}
